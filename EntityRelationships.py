@@ -12,6 +12,7 @@ with open('dhaka_tribune.csv', 'r') as f:
     rownum = 0
     for row in reader:
         #determine number of rows in csv to be analysed
+        #Hi
         if counter == 1:
             break
 
