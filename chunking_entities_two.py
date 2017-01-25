@@ -122,7 +122,7 @@ with open('taggednew.txt', 'r') as f:
         ALLENTITIES.extend(ORGANIZATION)
         ALLENTITIES.extend(LOCATION)
 
-        formatted_line = (line.replace("/ORGANIZATION","").replace("/PERSON","").replace("/LOCATION","").replace("/O",""))
+        formatted_line = (line.replace("/ORGANIZATION","").replace("/PERSON","").replace("/LOCATION","").replace("/O","").replace(",",""))
         insert_in_cv(formatted_line)
 
         ALLENTITIES = []
