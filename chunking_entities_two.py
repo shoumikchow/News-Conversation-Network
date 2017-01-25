@@ -42,25 +42,21 @@ def remove_duplicate_elements():
     LOCATION = list(set(LOCATION))
     ORGANIZATION = list(set(ORGANIZATION))
 
-def insert_in_cv(formatted_line):
-   # print (formatted_line)
-   # for subset in itertools.combinations(PERSON, 2):
-   #     print (subset)
-   # global PERSON
-   # PERSON = []
+def insert_in_cv(formatted_line,sline):
+
     if len(ALLENTITIES)<2:
        return
 
     if len(ALLENTITIES) == 2:
         
-        with open("newfile_two.csv", "a") as my_output:
-            my_output.write(ALLENTITIES[0]+","+get_tag(ALLENTITIES[0])+","+ALLENTITIES[1]+","+get_tag(ALLENTITIES[1])+","+formatted_line+"\n")
+        with open("newfile_final.csv", "a") as my_output:
+            my_output.write(sline[0][:-2]+","+sline[1][:-2]+" "+sline[2][:-2]+","+ALLENTITIES[0]+","+get_tag(ALLENTITIES[0])+","+ALLENTITIES[1]+","+get_tag(ALLENTITIES[1])+","+formatted_line+"\n")
         return
 
     else:
         for subset in itertools.combinations(ALLENTITIES, 2):
-            with open("newfile_two.csv", "a") as my_output:
-                my_output.write(subset[0]+","+get_tag(subset[0])+","+subset[1]+","+get_tag(subset[1])+","+formatted_line+"\n")
+            with open("newfile_final.csv", "a") as my_output:
+                my_output.write(sline[0][:-2]+","+sline[1][:-2]+" "+sline[2][:-2]+","+subset[0]+","+get_tag(subset[0])+","+subset[1]+","+get_tag(subset[1])+","+formatted_line+"\n")
         return
 
 def get_tag(word):
@@ -77,7 +73,7 @@ def clear_prev_tag():
     prev_tag = ''
     return
     
-with open('TESTTAG.txt', 'r') as f:
+with open('tagged_1.txt', 'r') as f:
     
     #count = 0
     for line in f.readlines():
@@ -134,7 +130,8 @@ with open('TESTTAG.txt', 'r') as f:
         ALLENTITIES.extend(LOCATION)
 
         formatted_line = (line.replace("/ORGANIZATION","").replace("/PERSON","").replace("/LOCATION","").replace("/O","").replace(",",""))
-        insert_in_cv(formatted_line)
+        formatted_line = ' '.join(map(str,formatted_line.split(' ', 3)[3:]))
+        insert_in_cv(formatted_line, sline)
 
         ALLENTITIES = []
         PERSON = []
