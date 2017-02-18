@@ -101,7 +101,7 @@ def entities_in_text(just_text, loc, org, pers):
 
 # entity[0] is location, entity[1] is org, entity[2] is pers
 
-with open("/home/shoumik/Documents/Kolpokoushol/Scraped data/final v1.2.csv", "r") as file:
+with open("/home/shoumik/Documents/Kolpokoushol/Scraped data/final v2.1.csv", "r") as file:
     conversational_words = ['said', 'told', 'asked', 'speak', 'say', 'tell', 'spoke', 'add', 'alleged', 'declare']
     counter = 0
     reader = csv.reader(file)
