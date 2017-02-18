@@ -3,6 +3,11 @@ import ast
 with open("/home/shoumik/Documents/Kolpokoushol/Scraped data/quotations and speeches v1.1.csv", "r") as file:
     reader = csv.reader(file)
     next(reader)
+
+    with open("/home/shoumik/Documents/Kolpokoushol/Scraped data/quotations and speeches v1.1.csv", "a") as out:
+        writer = csv.writer(out)
+        writer.writerow(["original_id", "timestamp", "text", "locations", "organizations", "persons", "original_tags", "naive_tags", "keywords"])
+
     article = []
     text = ""
     conversational_words = ['said', 'told', 'asked', 'speak', 'say', 'tell', 'spoke', 'add', 'alleged', 'declare']
