@@ -12,19 +12,19 @@ def get_text_sentiment(text):
 
     max_emo_val = max(emotions.values())
     max_emo_key = list(emotions.keys())[list(emotions.values()).index(max_emo_val)]
-
+    # print(text)
     return emotions['anger'], emotions['disgust'], emotions['fear'], emotions['joy'], emotions['sadness'], max_emo_key
 
 
-with open("/home/shoumik/Documents/Kolpokoushol/Scraped data/quotations and speeches v2.0", "r") as file:
+with open("/home/shoumik/Documents/Kolpokoushol/Scraped data/quotations and speeches v2.0.1.csv", "r") as file:
     reader = csv.reader(file)
     next(reader)
-    with open("/home/shoumik/Documents/Kolpokoushol/Scraped data/quotations and speeches with sentiment v2.1", "a") as out:
+    with open("/home/shoumik/Documents/Kolpokoushol/Scraped data/quotations and speeches with sentiment v2.1.csv", "a") as out:
         writer = csv.writer(out)
         writer.writerow(["original_id", "timestamp", "text", "locations", "organizations", "persons", "original_tag", "naive_tag", "keywords", "anger", "disgust", "fear", "joy", "sadness", "maximum_emotion"])
 
     for row in reader:
-        anger, disgust, fear, joy, sadness, max_emo_key = get_text_sentiment(row[1])
-        with open("/home/shoumik/Documents/Kolpokoushol/Scraped data/quotations and speeches with sentiment v2.1", "a") as out:
+        anger, disgust, fear, joy, sadness, max_emo_key = get_text_sentiment(row[2])
+        with open("/home/shoumik/Documents/Kolpokoushol/Scraped data/quotations and speeches with sentiment v2.1.csv", "a") as out:
             writer = csv.writer(out)
             writer.writerow([row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], anger, disgust, fear, joy, sadness, max_emo_key])
