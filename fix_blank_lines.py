@@ -6,7 +6,7 @@ with open("/home/shoumik/Documents/Kolpokoushol/Scraped data/quotations and spee
 
     with open("/home/shoumik/Documents/Kolpokoushol/Scraped data/quotations and speeches v1.1.csv", "a") as out:
         writer = csv.writer(out)
-        writer.writerow(["original_id", "timestamp", "text", "locations", "organizations", "persons", "original_tags", "naive_tags", "keywords"])
+        writer.writerow(["original_id", "timestamp", "text", "locations", "organizations", "persons", "original_tag", "naive_tag", "keywords"])
 
     article = []
     text = ""

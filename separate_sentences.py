@@ -108,7 +108,7 @@ with open("/home/shoumik/Documents/Kolpokoushol/Scraped data/final v2.1.csv", "r
 
     with open("/home/shoumik/Documents/Kolpokoushol/Scraped data/quotations and speeches v1.1.csv", "a") as out:
         writer = csv.writer(out)
-        writer.writerow(["original_id", "timestamp", "text", "locations", "organizations", "persons", "original_tags", "naive_tags", "keywords"])
+        writer.writerow(["original_id", "timestamp", "text", "locations", "organization", "person", "original_tags", "naive_tags", "keywords"])
 
     for row in reader:
         counter += 1
