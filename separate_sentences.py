@@ -6,6 +6,12 @@ import ast
 tokenizer = nltk.data.load('nltk:tokenizers/punkt/english.pickle')
 
 
+def check_alleged(text):
+    if re.search(r'\balleged\b', text):
+        return True
+    return False
+
+
 def fix_quotes(line):
     line = line
 
@@ -101,12 +107,12 @@ def entities_in_text(just_text, loc, org, pers):
 
 # entity[0] is location, entity[1] is org, entity[2] is pers
 
-with open("/home/shoumik/Documents/Kolpokoushol/Scraped data/final v2.1.csv", "r") as file:
-    conversational_words = ['said', 'told', 'asked', 'speak', 'say', 'tell', 'spoke', 'add', 'alleged', 'declare']
+with open("./final v2.1.csv", "r") as file:
+    conversational_words = ['said', 'told', 'asked', 'speak', 'say', 'tell', 'spoke', 'added', 'declare']
     counter = 0
     reader = csv.reader(file)
 
-    with open("/home/shoumik/Documents/Kolpokoushol/Scraped data/quotations and speeches v1.1.csv", "a") as out:
+    with open("./quotations_and_speeches_v1.1.csv", "a") as out:
         writer = csv.writer(out)
         writer.writerow(["original_id", "timestamp", "text", "locations", "organization", "person", "original_tags", "naive_tags", "keywords"])
 
@@ -143,22 +149,22 @@ with open("/home/shoumik/Documents/Kolpokoushol/Scraped data/final v2.1.csv", "r
         # entity[0] is location, entity[1] is org, entity[2] is pers
 
                     if entities and len(entities[0] + entities[1] + entities[2]) >= 2:
-                        with open("/home/shoumik/Documents/Kolpokoushol/Scraped data/quotations and speeches v1.1.csv", "a") as out:
+                        with open("./quotations_and_speeches_v1.1.csv", "a") as out:
                             writer = csv.writer(out)
                             writer.writerow([oid, time, text, entities[0], entities[1], entities[2], o_tags, naive_tags, keywords])
 
                 period_delimited_list = tokenizer.tokenize(news_text)
 
                 for sentence in period_delimited_list:
-                    if any(word in sentence for word in conversational_words):
+                    if any(word in sentence for word in conversational_words) or check_alleged(sentence):
                         if quotes:
                             sentence, entities = entities_in_text(
                                 sentence, locations, organizations, persons)
                             if not any(sentence in s for s in quotes) and entities and len(entities[0] + entities[1] + entities[2]) >= 2:
-                                with open("/home/shoumik/Documents/Kolpokoushol/Scraped data/quotations and speeches v1.1.csv", "a") as out:
+                                with open("./quotations_and_speeches_v1.1.csv", "a") as out:
                                     writer = csv.writer(out)
                                     writer.writerow([oid, time, sentence, entities[0], entities[1], entities[2], o_tags, naive_tags, keywords])
 
         except:
-            print(counter, row[26])
-            # pass
+            # print(counter, row[26])
+            pass
