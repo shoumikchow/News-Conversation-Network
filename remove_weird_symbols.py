@@ -1,5 +1,5 @@
 import csv
-with open("./final v2.0.csv", "r") as file:
+with open("./Scraped data/final v2.0.csv", "r") as file:
     reader = csv.reader(file)
     for row in reader:
         oid = row[0]
@@ -35,7 +35,7 @@ with open("./final v2.0.csv", "r") as file:
 
         # print(news_text)
 
-        f = csv.writer(open("./final v2.1.csv", "a"))
+        f = csv.writer(open("./Scraped data/final v2.1.csv", "a"))
         f.writerow([row[0], row[1], row[2], news_headline, row[4], row[5], row[6], row[7], row[8], row[9],
                     row[10], news_ner_tags__locations, news_ner_tags__locations_unique, row[13], row[14], news_ner_tags__organizations,
                     news_ner_tags__organizations_unique, row[17], row[18], news_ner_tags__persons, news_ner_tags__persons_unique,

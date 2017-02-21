@@ -1,7 +1,7 @@
 import json
 import csv
 
-with open('.s/bd_news_dt.json', 'r+') as infile:
+with open('.Scraped data/bd_news_dt.json', 'r+') as infile:
     data = json.load(infile)
 
 
@@ -54,7 +54,7 @@ for i in range(3):
 
     # replace("‚Äė", "").replace("‚Äô","").replace(",Äú","\"").replace("‚ÄĚ","\"").replace("‚Äô","'")
 
-    f = csv.writer(open("/home/shoumik/Documents/Kolpokoushol/new_scraped.csv", "a"))
+    f = csv.writer(open("./Scraped data/new_scraped.csv", "a"))
     """
     f.writerow(["_id__$oid", "is_negative", "news_crawled_date__$date", "news_headline", "news_image_urls",
                 "news_keywords", "news_location", "news_ml_tags", "news_naive_tags", "news_ner_tags__dates",

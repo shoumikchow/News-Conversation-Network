@@ -1,10 +1,10 @@
 import csv
 import ast
-with open("./quotations_and_speeches_v1.1.csv", "r") as file:
+with open("./Scraped data/quotations_and_speeches_v1.1.csv", "r") as file:
     reader = csv.reader(file)
     next(reader)
 
-    with open("./quotations_and_speeches_v2.0.csv", "a") as out:
+    with open("./Scraped data/quotations_and_speeches_v2.0.csv", "a") as out:
         writer = csv.writer(out)
         writer.writerow(["original_id", "timestamp", "text", "locations", "organizations", "persons", "original_tag", "naive_tag", "keywords"])
 
@@ -35,11 +35,11 @@ with open("./quotations_and_speeches_v1.1.csv", "r") as file:
                         if l in i:
                             new_per.append(l)
 
-            with open("./quotations_and_speeches_v2.0.csv", "a") as out:
+            with open("./Scraped data/quotations_and_speeches_v2.0.csv", "a") as out:
                 writer = csv.writer(out)
                 if len(new_loc + new_org + new_per) >= 2:
                     writer.writerow([row[0], row[1], text, new_loc, new_org, new_per, row[6], row[7], row[8]])
         else:
-            with open("./quotations_and_speeches_v2.0.csv", "a") as out:
+            with open("./Scraped data/quotations_and_speeches_v2.0.csv", "a") as out:
                 writer = csv.writer(out)
                 writer.writerow([row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]])

@@ -2,7 +2,7 @@ import csv
 import ast
 from collections import Counter, OrderedDict
 
-with open("./quotations_and_speeches_v2.0.csv", "r") as file:
+with open("./Scraped data/quotations_and_speeches_v2.0.csv", "r") as file:
     reader = csv.reader(file)
     all_locations = []
     all_organizations = []
@@ -33,17 +33,17 @@ ordered_loc = OrderedDict(sorted(loc_counter.items(), key=lambda t: t[1]))
 ordered_org = OrderedDict(sorted(org_counter.items(), key=lambda t: t[1]))
 ordered_per = OrderedDict(sorted(per_counter.items(), key=lambda t: t[1]))
 
-# with open("./location_count.csv", "a") as out:
+# with open("./Scraped data/location_count.csv", "a") as out:
 #     writer = csv.writer(out)
 #     for k, v in reversed(ordered_loc.items()):
 #         writer.writerow([k, v])
 
-# with open("./organization_count.csv", "a") as out:
+# with open("./Scraped data/organization_count.csv", "a") as out:
 #     writer = csv.writer(out)
 #     for k, v in reversed(ordered_org.items()):
 #         writer.writerow([k, v])
 
-with open("./Scraped data/person_count.csv", "a") as out:
+with open("./Scraped data/Scraped data/person_count.csv", "a") as out:
     writer = csv.writer(out)
     for k, v in reversed(ordered_per.items()):
         writer.writerow([k, v])
