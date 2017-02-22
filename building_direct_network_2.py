@@ -27,9 +27,9 @@ def convert_tags_string_to_list(tags):
     if tags == '[]':
         return []
     else:
-        #tags_list =  ((tags.replace('[','').replace(']','').replace('\'','').replace(',',' ')).split())
+        # tags_list =  ((tags.replace('[','').replace(']','').replace('\'','').replace(',',' ')).split())
         tags_list = ((tags.replace('[', '').replace(']', '').replace('\'', '')).split(', '))
-        #print (tags_list)
+        # print (tags_list)
         return tags_list
 
 
@@ -49,7 +49,7 @@ def insert_in_csv(news_id, timestamp, line, original_tags, naive_tags, keywords_
 
         for instance in itertools.product(subjects, objects):
 
-            with open("./Scraped data/Scraped data/direct_network_improvised.csv", "a", newline='') as my_output:
+            with open("./Scraped data/network_direct_improvised.csv", "a", newline='') as my_output:
                 writer = csv.writer(my_output)
                 writer.writerow([news_id, timestamp, instance[0], get_tag(instance[0]), instance[1], get_tag(instance[1]), line, original_tags, naive_tags, keywords_from_csv])
 
@@ -75,15 +75,21 @@ def empty_all_lists():
     return
 
 
-keywords = ['said', 'told', 'asked', 'speak', 'say', 'tell', 'spoke']
-#line = 'Mark Zuckerberg, CEO of Facebook said, "Google is awesome. They suck"'
-#tags = ['Mark Zuckerberg', 'Facebook','Google']
+keywords = ['said', 'told', 'asked', 'speak', 'say', 'tell', 'spoke', 'added', 'alleged', 'declare']
+# line = 'Mark Zuckerberg, CEO of Facebook said, "Google is awesome. They suck"'
+# tags = ['Mark Zuckerberg', 'Facebook','Google']
 # print("bla")
 counter = 0
 rowCounter = 2
 # with open("quotations_and_speeches_v2.csv", "r") as f:
-with open("./Scraped data/Scraped data/quotations_and_speeches_v2.0.csv", "r") as f:
+with open("./Scraped data/quotations_and_speeches_v2.0.csv", "r") as f:
     reader = csv.reader(f)
+    next(reader)
+
+    with open("./Scraped data/network_direct_improvised.csv", "a", newline='') as my_output:
+        writer = csv.writer(my_output)
+        writer.writerow(["original_id", "timestamp", "subject", "subject_tag", "object", "object_tag", "text", "original_tags", "naive_tags", "keywords"])
+
     for row in reader:
         if counter == 0:
             counter += 1
@@ -100,8 +106,8 @@ with open("./Scraped data/Scraped data/quotations_and_speeches_v2.0.csv", "r") a
         organization_tags = convert_tags_string_to_list(row[4])
         person_tags = convert_tags_string_to_list(row[5])
         tags = location_tags + organization_tags + person_tags
-        #print ("Here are tags")
-        #print (tags)
+        # print ("Here are tags")
+        # print (tags)
         original_tag = row[6]
         naive_tag = row[7]
         keywords_from_csv = row[8]
@@ -116,15 +122,15 @@ with open("./Scraped data/Scraped data/quotations_and_speeches_v2.0.csv", "r") a
             for word in tags:
                 if word in new_line:
                     objects.append(word)
-            #print("Here are objects")
-            #print (objects)
+            # print("Here are objects")
+            # print (objects)
 
             sentence_without_quotations = (get_sentence_without_quotations(quoted_sentences, line))
-            #print (sentence_without_quotations)
+            # print (sentence_without_quotations)
             for word in tags:
                 if word in sentence_without_quotations:
                     subjects.append(word)
-            #print ("quotation program line ended")
+            # print ("quotation program line ended")
 
         # For sentences without quotations
         else:
@@ -149,9 +155,9 @@ with open("./Scraped data/Scraped data/quotations_and_speeches_v2.0.csv", "r") a
                             if word in left:
                                 objects.append(word)
 
-        #print ("here are subjects and objects")
-        #print (subjects)
-        #print (objects)
+        # print ("here are subjects and objects")
+        # print (subjects)
+        # print (objects)
         remove_duplicate_elements()
         insert_in_csv(news_id, timestamp, line, original_tag,
                       naive_tag, keywords_from_csv, subjects, objects)
