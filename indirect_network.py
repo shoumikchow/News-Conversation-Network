@@ -81,15 +81,15 @@ with codecs.open('quotations_and_speeches_v2.csv', 'r', encoding='utf-8', errors
 		organization_tags = convert_tags_string_to_list(row[4])
 		person_tags = convert_tags_string_to_list(row[5])
 		tags = location_tags + organization_tags + person_tags
-		subjects = list(set(tags))
+		tags = list(set(tags))
         #print ("Here are tags")
         #print (tags)
 		original_tag = row[6]
 		naive_tag = row[7]
 		keywords_from_csv = row[8]
 
-		print (tags)
-		print (counter)
+
+
 		counter += 1
 		insert_in_csv(news_id, timestamp, line, tags, original_tag,
                       naive_tag, keywords_from_csv)
