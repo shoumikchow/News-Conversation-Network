@@ -76,9 +76,6 @@ def empty_all_lists():
 
 
 keywords = ['said', 'told', 'asked', 'speak', 'say', 'tell', 'spoke', 'added', 'alleged', 'declare']
-# line = 'Mark Zuckerberg, CEO of Facebook said, "Google is awesome. They suck"'
-# tags = ['Mark Zuckerberg', 'Facebook','Google']
-# print("bla")
 counter = 0
 rowCounter = 2
 # with open("quotations_and_speeches_v2.csv", "r") as f:
@@ -96,6 +93,9 @@ with open("./Scraped data/quotations_and_speeches_v2.0.csv", "r") as f:
             continue
 
         if row[2] == '' or "\n" in row[2]:
+            continue
+
+        if re.search(r'[\'\"].[\'\"]', row[3]) or re.search(r'[\'\"].[\'\"]', row[4]) or re.search(r'[\'\"].[\'\"]', row[5]):
             continue
 
         news_id = row[0]

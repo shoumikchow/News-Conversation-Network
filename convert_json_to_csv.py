@@ -1,7 +1,7 @@
 import json
 import csv
 
-with open('.Scraped data/bd_news_dt.json', 'r+') as infile:
+with open('./Scraped data/bd_news_dt.json', 'r+') as infile:
     data = json.load(infile)
 
 

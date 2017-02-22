@@ -1,5 +1,6 @@
 import csv
 import ast
+import re
 from collections import Counter, OrderedDict
 
 with open("./Scraped data/quotations_and_speeches_v2.0.csv", "r") as file:
@@ -9,6 +10,9 @@ with open("./Scraped data/quotations_and_speeches_v2.0.csv", "r") as file:
     all_persons = []
     next(reader)
     for row in reader:
+
+        if re.search(r'[\'\"].[\'\"]', row[3]) or re.search(r'[\'\"].[\'\"]', row[4]) or re.search(r'[\'\"].[\'\"]', row[5]):
+            continue
 
         location = row[3]
         organization = row[4]
@@ -33,19 +37,19 @@ ordered_loc = OrderedDict(sorted(loc_counter.items(), key=lambda t: t[1]))
 ordered_org = OrderedDict(sorted(org_counter.items(), key=lambda t: t[1]))
 ordered_per = OrderedDict(sorted(per_counter.items(), key=lambda t: t[1]))
 
-# with open("./Scraped data/location_count.csv", "a") as out:
-#     writer = csv.writer(out)
-#     for k, v in reversed(ordered_loc.items()):
-#         writer.writerow([k, v])
+with open("./Scraped data/location_count.csv", "a") as out:
+    writer = csv.writer(out)
+    for k, v in reversed(ordered_loc.items()):
+        writer.writerow([k, v])
 
 # with open("./Scraped data/organization_count.csv", "a") as out:
 #     writer = csv.writer(out)
 #     for k, v in reversed(ordered_org.items()):
 #         writer.writerow([k, v])
 
-with open("./Scraped data/Scraped data/person_count.csv", "a") as out:
-    writer = csv.writer(out)
-    for k, v in reversed(ordered_per.items()):
-        writer.writerow([k, v])
+# with open("./Scraped data/person_count.csv", "a") as out:
+#     writer = csv.writer(out)
+#     for k, v in reversed(ordered_per.items()):
+#         writer.writerow([k, v])
 
 # DO NOT DELETE THE COMMENTS!

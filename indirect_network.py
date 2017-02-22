@@ -1,6 +1,7 @@
 import csv
 import itertools
 import codecs
+import re
 
 location_tags = []
 organization_tags = []
@@ -78,6 +79,9 @@ with codecs.open('./Scraped data/quotations_and_speeches_v2.0.csv', 'r', encodin
             continue
 
         if row[2] == '' or "\n" in row[2]:
+            continue
+
+        if re.search(r'[\'\"].[\'\"]', row[3]) or re.search(r'[\'\"].[\'\"]', row[4]) or re.search(r'[\'\"].[\'\"]', row[5]):
             continue
 
         news_id = row[0]
