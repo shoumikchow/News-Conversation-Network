@@ -9,11 +9,9 @@ count = 1
 
 reader = csv.DictReader( csvfile)
 for row in reader:
-    if count == 4:
+    if count == 20:
         break
-    print (row)
     arr = {"source":row["subject"],"target":row["object"]}
-    print (row["subject"])
     json.dump(arr, jsonfile)
     jsonfile.write(',\n')
     count += 1
