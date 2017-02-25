@@ -4,6 +4,9 @@ import json
 csvfile = open('./Scraped data/network_direct_improvised.csv', 'r')
 jsonfile = open('output_two_hops.json', 'w')
 
+nodes_limit = 40
+center_node = "BNP"
+
 def find_second_hop_edges(subject):
 
     coun = 0
@@ -11,7 +14,7 @@ def find_second_hop_edges(subject):
     read = csv.DictReader(csvfil)
     second_hop_objects_already_added = []
     for row in read:
-        if coun == 10:
+        if coun == nodes_limit:
             break
     
         if row["subject"] == subject and row["object"] in keywords:
@@ -35,12 +38,12 @@ objects_already_added = []
 reader = csv.DictReader(csvfile)
 for row_number, row in enumerate(reader):
 
-    if count == 10:
+    if count == nodes_limit:
         break
     
-    if row["subject"] == "Sheikh Hasina" and row["object"] in keywords:
+    if row["subject"] == center_node and row["object"] in keywords:
         if row["object"] not in objects_already_added:
-            #print ("Count: "+str(count)+" "+row["subject"]+" "+row["object"])
+            print ("Count: "+str(count)+" "+row["subject"]+" "+row["object"])
             objects_already_added.append(row["object"])
             #print ("---"+str(row_number)+"---")
             #print (row["text"])
