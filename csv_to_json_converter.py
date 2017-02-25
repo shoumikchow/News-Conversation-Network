@@ -7,7 +7,7 @@ jsonfile = open('output.json', 'w')
 
 count = 1
 
-reader = csv.DictReader( csvfile)
+reader = csv.DictReader(csvfile)
 for row in reader:
     if count == 20:
         break
