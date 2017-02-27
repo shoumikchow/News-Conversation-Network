@@ -6,24 +6,6 @@
   <!-- load D3plus after D3js -->
   <script src="//d3plus.org/js/d3plus.js"></script>
 
-<!--   <script src="lib/d3.js"></script>
-	<script src="lib/modernizr.custom.js"></script>
-
-	<script src="src/general.js"></script>
-	<script src="src/viz.js"></script>
-
-	<script src="src/ui/tooltip.js"></script>
-
-	<script src="src/utils/data.js"></script>
-	<script src="src/utils/error.js"></script>
-	<script src="src/utils/nesting.js"></script>
-	<script src="src/utils/titles.js"></script>
-	<script src="src/utils/tooltip.js"></script>
-	<script src="src/utils/utils.js"></script>
-	<script src="src/utils/variables.js"></script>
-	<script src="src/utils/wordwrap.js"></script>
-
-	<script src="src/apps/rings.js"></script> -->
 
 <div id="viz"></div>
 
@@ -32,26 +14,52 @@
 
 
 	var viz = d3plus.viz()
-	d3.json("artists_indented.json", function(artists){
-	d3.json("artist_similarity.json", function(network){
-   	var attrs = {"artist_id": artists}
-   	viz
-          .type("rings")
-          .attrs(attrs)
-          .dev(true)
-          .aggs({"hotttnesss":"mean"})
-          .id("artist_id")
-          .text("names")
-          .edges(network.edges)
-          .color(.2)
-          .focus("ARJ7KF01187B98D717")
-          .container("#viz")
-          .draw()
+	// d3.json("artists_indented.json", function(artists){
+	// d3.json("output.json", function(network){
+ //   	// var attrs = {"names": artists}
+ //   	viz
+ //          .type("rings")
+ //          .attrs(attrs)
+ //          .dev(true)
+ //          .aggs({"hotttnesss":"mean"})
+ //          .id("artist_id")
+ //          .text("names")
+ //          .edges(network.edges)
+ //          .color(.2)
+ //          .focus("ARJ7KF01187B98D717")
+ //          .container("#viz")
+ //          .draw()
 
-          // d3.select("#viz")
-          // .data(artists)
-          // .call(viz)
-          })
-	})
+ //          // d3.select("#viz")
+ //          // .data(artists)
+ //          // .call(viz)
+ //          })
+	// })
+   var fill = d3.scale.category10();
+
+d3.json("output_two_hops.json", function(network){
+   var visualization = d3plus.viz()
+    .container("#viz")  // container DIV to hold the visualization
+    .type("rings")      // visualization type
+    // .edges(network.edges) // list of node connections
+    .edges({
+      "color": function(e) { return (e.sentiment_value); },
+      "value": network.edges,
+      "arrows": false,
+
+    })
+    .focus("BNP")
+    .history(false)
+    // .edges({
+    //   "color": network.edges[0]["sentiment_value"],
+    //   }
+    //   )
+    .draw()             // finally, draw the visualization!
+
+    console.log(network.edges["sentiment_value"]);
+    
+
+});
+
 
 </script>

@@ -19,6 +19,7 @@ def get_sentence_without_quotations(quoted_sentences, line):
         new_line = new_line.replace(sentence, '')
         new_line = new_line.replace('"', '')
     return new_line.strip()
+chcek?
 
 
 def convert_tags_string_to_list(tags):

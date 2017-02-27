@@ -44,12 +44,17 @@ def insert_in_csv(news_id, timestamp, line, original_tags, naive_tags, keywords_
     line = line.replace(",", " ")
     # print(subjects)
     # print (line)
+    # print ("----")
+    # print (subjects)
+    # print (objects)
+    # print (line)
+    # print ("----")
 
     if len(subjects) >= 1 and len(objects) >= 1:
 
         for instance in itertools.product(subjects, objects):
 
-            with open("./Scraped data/network_direct_improvised.csv", "a") as my_output:
+            with open("./Scraped data/network_sample_output.csv", "a", newline='') as my_output:
                 writer = csv.writer(my_output)
                 writer.writerow([news_id, timestamp, instance[0], get_tag(instance[0]), instance[1], get_tag(instance[1]), line, original_tags, naive_tags, keywords_from_csv])
 
@@ -79,15 +84,21 @@ keywords = ['said', 'told', 'asked', 'speak', 'say', 'tell', 'spoke', 'added', '
 counter = 0
 rowCounter = 2
 # with open("quotations_and_speeches_v2.csv", "r") as f:
-with open("./Scraped data/quotations_and_speeches_v2.0.csv", "r") as f:
+# with open("./Scraped data/quotations_and_speeches_v2.0.csv", "r") as f:
+with open("./Scraped data/problem_same.csv", "r") as f:
     reader = csv.reader(f)
     next(reader)
 
-    with open("./Scraped data/network_direct_improvised.csv", "a") as my_output:
+# with open("./Scraped data/network_direct_improvised.csv", "a", newline='') as my_output:
+    with open("./Scraped data/network_sample_output.csv", "a", newline='') as my_output:
         writer = csv.writer(my_output)
         writer.writerow(["original_id", "timestamp", "subject", "subject_tag", "object", "object_tag", "text", "original_tags", "naive_tags", "keywords"])
 
     for row in reader:
+
+        # if rowCounter == 10:
+        #     break
+
         if counter == 0:
             counter += 1
             continue
@@ -135,25 +146,29 @@ with open("./Scraped data/quotations_and_speeches_v2.0.csv", "r") as f:
         # For sentences without quotations
         else:
             sline = line.split()
-
+            # print (sline)
             for word in keywords:
                 if word in sline:
+                    # print (word)
                     lim = sline.index(word)
                     left = ' '.join(sline[:lim])
                     right = ' '.join(sline[lim + 1:])
                     if len(left) <= len(right):
+                        for word in tags:
+                            if word in left:
+                                subjects.append(word)
+                            if word in right:
+                                objects.append(word)
+
+                    else:
 
                         for word in tags:
-                            if word in left:
-                                subjects.append(word)
-                            if word in right:
-                                objects.append(word)
-                    else:
-                        for word in tags:
                             if word in right:
                                 subjects.append(word)
                             if word in left:
                                 objects.append(word)
+
+                    break
 
         # print ("here are subjects and objects")
         # print (subjects)
