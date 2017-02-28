@@ -11,21 +11,16 @@ center_node = "BNP"
 def find_color(sentiment_value):
     sentiment_value = float(sentiment_value)
     hexColor = ""
-    if(sentiment_value<=.25):
+    if(sentiment_value <= .25):
         hexColor = "#960101"
-    
-    elif(sentiment_value<=.45):
+    elif(sentiment_value <= .45):
         hexColor = "#fc0a0a"
-    
-    elif(sentiment_value<=.55):
+    elif(sentiment_value <= .55):
         hexColor = "#e2ff66"
-    
-    elif(sentiment_value<=.75):
+    elif(sentiment_value <= .75):
         hexColor = "#3090ff"
-    
     else:
         hexColor = "#0650a5"
-    
     return hexColor
 
 
@@ -36,7 +31,7 @@ def find_total_sentiment_and_total_instance_count(position_in_csv, subject, obje
     count = 1
     totalsentiment = 0
     # csvf.seek(position_in_csv)
-    for row_number,row in enumerate(r):
+    for row_number, row in enumerate(r):
         # if count >= 40:
         #     break
         if row["subject"] == subject and row["object"] == object and row["text"] != text:
@@ -44,7 +39,6 @@ def find_total_sentiment_and_total_instance_count(position_in_csv, subject, obje
             totalsentiment += float(row["sentiment_value"])
             count += 1
 
-            
     return [totalsentiment,count]
         
 
@@ -70,7 +64,6 @@ def find_second_hop_edges(subject):
                 json.dump(arr, jsonfile)
                 jsonfile.write(',\n')
                 coun += 1
-
 
 
 count = 0
