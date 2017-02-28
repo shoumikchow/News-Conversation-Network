@@ -54,7 +54,7 @@ def insert_in_csv(news_id, timestamp, line, original_tags, naive_tags, keywords_
 
         for instance in itertools.product(subjects, objects):
 
-            with open("./Scraped data/network_sample_output.csv", "a", newline='') as my_output:
+            with open("./Scraped data/network_direct_improvised.csv", "a", newline='') as my_output:
                 writer = csv.writer(my_output)
                 writer.writerow([news_id, timestamp, instance[0], get_tag(instance[0]), instance[1], get_tag(instance[1]), line, original_tags, naive_tags, keywords_from_csv])
 
@@ -85,12 +85,12 @@ counter = 0
 rowCounter = 2
 # with open("quotations_and_speeches_v2.csv", "r") as f:
 # with open("./Scraped data/quotations_and_speeches_v2.0.csv", "r") as f:
-with open("./Scraped data/problem_same.csv", "r") as f:
+with open("./Scraped data/quotations_and_speeches_v3.1.csv", "r") as f:
     reader = csv.reader(f)
     next(reader)
 
 # with open("./Scraped data/network_direct_improvised.csv", "a", newline='') as my_output:
-    with open("./Scraped data/network_sample_output.csv", "a", newline='') as my_output:
+    with open("./Scraped data/network_direct_improvised.csv", "a", newline='') as my_output:
         writer = csv.writer(my_output)
         writer.writerow(["original_id", "timestamp", "subject", "subject_tag", "object", "object_tag", "text", "original_tags", "naive_tags", "keywords"])
 
