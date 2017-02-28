@@ -4,7 +4,7 @@ import json
 csvfile = open('./Scraped data/quotations_and_speeches_v3.0.csv', 'r')
 jsonfile = open('output_two_hops.json', 'w')
 
-nodes_limit = 5
+nodes_limit = 39
 center_node = "BNP"
 
 
