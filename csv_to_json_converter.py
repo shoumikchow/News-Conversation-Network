@@ -7,6 +7,28 @@ jsonfile = open('output_two_hops.json', 'w')
 nodes_limit = 5
 center_node = "BNP"
 
+
+def find_color(sentiment_value):
+    sentiment_value = float(sentiment_value)
+    hexColor = ""
+    if(sentiment_value<=.25):
+        hexColor = "#960101"
+    
+    elif(sentiment_value<=.45):
+        hexColor = "#fc0a0a"
+    
+    elif(sentiment_value<=.55):
+        hexColor = "#e2ff66"
+    
+    elif(sentiment_value<=.75):
+        hexColor = "#3090ff"
+    
+    else:
+        hexColor = "#0650a5"
+    
+    return hexColor
+
+
 def find_total_sentiment_and_total_instance_count(position_in_csv, subject, object, text):
     csvf = open('./Scraped data/quotations_and_speeches_v3.0.csv', 'r')
 
@@ -15,8 +37,8 @@ def find_total_sentiment_and_total_instance_count(position_in_csv, subject, obje
     totalsentiment = 0
     # csvf.seek(position_in_csv)
     for row_number,row in enumerate(r):
-        if count >= 40:
-            break
+        # if count >= 40:
+        #     break
         if row["subject"] == subject and row["object"] == object and row["text"] != text:
             print ("In function----  "+str(row_number)+" "+row["text"])
             totalsentiment += float(row["sentiment_value"])
@@ -32,7 +54,7 @@ def find_second_hop_edges(subject):
     csvfil = open('./Scraped data/quotations_and_speeches_v3.0.csv', 'r')
     read = csv.DictReader(csvfil)
     second_hop_objects_already_added = []
-    for row in read:
+    for row_number, row in enumerate(read):
         if coun == nodes_limit:
             break
     
@@ -40,7 +62,10 @@ def find_second_hop_edges(subject):
             if row["object"] not in second_hop_objects_already_added:
                 #print (row["subject"]+" "+row["object"])
                 second_hop_objects_already_added.append(row["object"])
-                arr = {"source":row["subject"],"target":row["object"],"sentiment_value":row["sentiment_value"]}
+                color = find_color(row["sentiment_value"])
+                total_sentiment_and_total_instance_count = find_total_sentiment_and_total_instance_count(row_number,row["subject"], row["object"],row["text"])
+                average_sentiment = (total_sentiment_and_total_instance_count[0] + float(row["sentiment_value"]))/total_sentiment_and_total_instance_count[1]
+                arr = {"source":row["subject"],"target":row["object"],"sentiment_value":row["sentiment_value"], "edge_color":color, "instance_count":total_sentiment_and_total_instance_count[1]}
                 json.dump(arr, jsonfile)
                 jsonfile.write(',\n')
                 coun += 1
@@ -66,12 +91,14 @@ for row_number, row in enumerate(reader):
             objects_already_added.append(row["object"])
             print (str(row_number)+" "+row["text"])
             print("---"+row["object"])
+            color = find_color(row["sentiment_value"])
             total_sentiment_and_total_instance_count = find_total_sentiment_and_total_instance_count(row_number,row["subject"], row["object"],row["text"])
-            average_sentiment = (total_sentiment_and_total_instance_count[0] + float(row["sentiment"]))/total_sentiment_and_total_instance_count[1]            
+            average_sentiment = (total_sentiment_and_total_instance_count[0] + float(row["sentiment_value"]))/total_sentiment_and_total_instance_count[1]            
+            
             #print ("---"+str(row_number)+"---")
             #print (row["text"])
-            arr = {"source":row["subject"],"target":row["object"],"sentiment_value":average_sentiment}
-            find_second_hop_edges(row["object"])
+            arr = {"source":row["subject"],"target":row["object"],"sentiment_value":average_sentiment,"edge_color":color,"instance_count":total_sentiment_and_total_instance_count[1]}
+            find_second_hop_edges(row["object"]) 
             json.dump(arr, jsonfile)
             jsonfile.write(',\n')
             count += 1
