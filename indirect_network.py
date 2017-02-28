@@ -19,6 +19,7 @@ def get_sentence_without_quotations(quoted_sentences, line):
         new_line = new_line.replace(sentence, '')
         new_line = new_line.replace('"', '')
     return new_line.strip()
+chcek?
 
 
 def convert_tags_string_to_list(tags):
@@ -38,7 +39,7 @@ def insert_in_csv(news_id, timestamp, line, tags, original_tags, naive_tags, key
 
     for instance in itertools.combinations(tags, 2):
 
-        with open("./Scraped data/network_indirect.csv", "a", newline='') as my_output:
+        with open("./Scraped data/network_indirect.csv", "a") as my_output:
             writer = csv.writer(my_output)
             writer.writerow([news_id, timestamp, instance[0], get_tag(instance[0]), instance[1], get_tag(instance[1]), line, original_tags, naive_tags, keywords_from_csv])
 
@@ -69,7 +70,7 @@ with codecs.open('./Scraped data/quotations_and_speeches_v2.0.csv', 'r', encodin
     reader = csv.reader(f)
     next(reader)
 
-    with open("./Scraped data/network_indirect.csv", "a", newline='') as my_output:
+    with open("./Scraped data/network_indirect.csv", "a") as my_output:
         writer = csv.writer(my_output)
         writer.writerow(["original_id", "timestamp", "entity", "tag", "entity", "tag", "text", "original_tags", "naive_tags", "keywords"])
 

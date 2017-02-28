@@ -9,7 +9,8 @@ TAGSINSENTENCE = {}
 
 prev_tag = ''
 
-def append_to_array(word,tag):
+
+def append_to_array(word, tag):
     if tag=='PERSON':
         PERSON.append(word)
     if tag=='LOCATION':
@@ -18,14 +19,15 @@ def append_to_array(word,tag):
         ORGANIZATION.append(word)
     return
 
+
 def append_to_last_element(word,tag):
-    #print("INSIDE METHOD")
+    # print("INSIDE METHOD")
 
     if tag=='PERSON':
-        #print (word)
+        # print (word)
         newWord = PERSON.pop()+" "+word
         PERSON.append(newWord)
-        #print (PERSON)
+        # print (PERSON)
     if tag=='LOCATION':
         newWord = LOCATION.pop()+" "+word
         LOCATION.append(newWord)
@@ -35,14 +37,13 @@ def append_to_last_element(word,tag):
     return
 
 
-
 def remove_duplicate_elements():
     global PERSON,LOCATION,ORGANIZATION
     PERSON = list(set(PERSON))
     LOCATION = list(set(LOCATION))
     ORGANIZATION = list(set(ORGANIZATION))
 
-def insert_in_cv(formatted_line,sline):
+def insert_in_cv(formatted_line, sline):
 
     if len(ALLENTITIES)<2:
        return
@@ -75,47 +76,48 @@ def clear_prev_tag():
 
 with open('tagged_1.txt', 'r') as f:
 
-    #count = 0
+    # count = 0
     for line in f.readlines():
-        #print(count)
-        #print (line)
+        # print(count)
+        # print (line)
         sline = line.split()
-        #print(sline)
-        for word in sline: #iterate through the words in a sentence
+        # print(sline)
+        for word in sline: # iterate through the words in a sentence
             matched_obj = re.match(r'^(.*)/(.*)$',word)
             current_word = matched_obj.group(1)
             current_tag = matched_obj.group(2)
-            #print(current_word)
+            # print(current_word)
 
 
-            if re.match(r'[!#$%&()*+,-./:;<=>?@[\]^_`{|}~]',current_word[len(current_word)-1]):
-                if current_tag == prev_tag:  #If the word has an attached punctuation and the word before it has same tag, they are chunked
+            if re.match(r'[!# $%&()*+,-./:;<=>?@[\]^_`{|}~]',current_word[len(current_word)-1]):
+                if current_tag == prev_tag:  # If the word has an attached punctuation and the word before it has same tag, they are chunked
                     append_to_last_element(current_word[:-1],current_tag)
-                else: #else they are appended as separate elements in separate lists
+                else: # else they are appended as separate elements in separate lists
                     append_to_array(current_word[:-1],current_tag)
 
                 clear_prev_tag()
                 continue
 
 
-            if re.match(r'^.*/(ORGANIZATION|LOCATION|PERSON)$',word):#If tag is any of these 3
+            if re.match(r'^.*/(ORGANIZATION|LOCATION|PERSON)$', word):
+            # If tag is any of these 3
 
-                #print (word)
-                if prev_tag == '':  #If no previous word had the above three tags
-                    append_to_array(current_word,current_tag)
+                #  print (word)
+                if prev_tag == '':  # If no previous word had the above three tags
+                    append_to_array(current_word, current_tag)
                     prev_tag = current_tag
-                    #print (PERSON)
+                    #  print (PERSON)
                     continue
 
                 else:
                     if current_tag == prev_tag:
-                        append_to_last_element(current_word,current_tag)
-                        #print (PERSON)
+                        append_to_last_element(current_word, current_tag)
+                        #  print (PERSON)
                         continue
 
                     else:
 
-                       append_to_array(current_word,current_tag)
+                       append_to_array(current_word ,current_tag)
                        clear_prev_tag()
                        continue
 
@@ -129,26 +131,22 @@ with open('tagged_1.txt', 'r') as f:
         ALLENTITIES.extend(ORGANIZATION)
         ALLENTITIES.extend(LOCATION)
 
-        formatted_line = (line.replace("/ORGANIZATION","").replace("/PERSON","").replace("/LOCATION","").replace("/O","").replace(",",""))
-        formatted_line = ' '.join(map(str,formatted_line.split(' ', 3)[3:]))
+        formatted_line = (line.replace("/ORGANIZATION", "").replace("/PERSON", "").replace("/LOCATION", "").replace("/O", "").replace(",", ""))
+        formatted_line = ' '.join(map(str, formatted_line.split(' ', 3)[3:]))
         insert_in_cv(formatted_line, sline)
 
         ALLENTITIES = []
         PERSON = []
         ORGANIZATION = []
         LOCATION = []
-        #count += 1
+        # count += 1
 
 
 
 
 
-remove_duplicate_elements()  #If there are duplicate elements in the list, they will be removed. However the order will change too.
+remove_duplicate_elements()  # If there are duplicate elements in the list, they will be removed. However the order will change too.
 
-#print(PERSON)
-#print(LOCATION)
-#print(ORGANIZATION)
-
-
-
-
+# print(PERSON)
+# print(LOCATION)
+# print(ORGANIZATION)
