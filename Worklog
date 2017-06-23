@@ -1,0 +1,4 @@
+23/6/17
+
+Zawad
+1) Found edge occurences in the subjects_objects.csv/indirect_network.csv in the GetEdgeOccurences.py script. The result is a list containing tuples, each of which consist of the edge and the number of times it occured.
