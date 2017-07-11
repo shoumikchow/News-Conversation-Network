@@ -17,3 +17,4 @@ Zawad
 11/7/17
 Zawad
 1) (11:45am - 12:57pm) Modified DailyStarCsvConverter.py to populate DailyStar.csv file. The tags in the text need to be removed now.
+2) (01:00pm - 02:15pm) Modified DailyStarCsvConverter.py to clean text. DailyStar.csv file now ready
