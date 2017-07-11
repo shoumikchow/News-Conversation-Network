@@ -3,14 +3,15 @@ import uuid
 import re
 import itertools
 
-def insert_in_csv(uniqueNewsID,newsDate,line,allEntities):
+def insertInCsv(uniqueNewsID,newsDate,line,allEntities):
 
     #Take combination pairs
     for instance in itertools.combinations(allEntities, 2):
         print (instance)
         with open("DailyStar.csv", "a") as my_output:
             writer = csv.writer(my_output)
-            writer.writerow([uniqueNewsID, newsDate, instance[0], get_tag(instance[0]), instance[1], get_tag(instance[1]), line])
+            writer.writerow([uniqueNewsID, newsDate, instance[0], getTag(instance[0]), instance[1], getTag(instance[1]), line])
+
 
 
 def populateEntityArray(word,entityTypeArray):
@@ -28,7 +29,9 @@ def populateEntityArray(word,entityTypeArray):
     
     previousTag = tag
 
-def get_tag(word):
+
+
+def getTag(word):
     if word in persons:
         return "PERSON"
     elif word in locations:
@@ -36,13 +39,17 @@ def get_tag(word):
     elif word in organizations:
         return "ORGANIZATION"
 
-def empty_all_lists():
+
+
+def emptyAllLists():
     global locations, organizations, persons, allEntities
     locations = []
     organizations = []
     persons = []
     allEntities = []
     return
+
+
 
 persons = []
 organizations = []
@@ -92,8 +99,8 @@ with open('DailyStar.txt') as f:
                 previousTag = ''
         
         allEntities = organizations + persons + locations
-        insert_in_csv(uniqueNewsID,newsDate,line,allEntities)
-        empty_all_lists()
+        insertInCsv(uniqueNewsID,newsDate,line,allEntities)
+        emptyAllLists()
         """print (organizations)
         print (persons)
         print (locations)"""
