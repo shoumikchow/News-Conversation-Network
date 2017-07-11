@@ -13,3 +13,7 @@ Zawad
 25/6/17
 Zawad
 1) (8:56pm) Added method to GetEdgeOccurences.py to ignore if common substring exists. Ex ignore AMA Muhith-Muhith
+
+11/7/17
+Zawad
+1) (11:45am - 12:57pm) Modified DailyStarCsvConverter.py to populate DailyStar.csv file. The tags in the text need to be removed now.
