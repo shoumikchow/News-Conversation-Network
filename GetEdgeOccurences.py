@@ -19,7 +19,7 @@ csvreader = csv.reader(csvfile, delimiter=',')"""
 csvHartalFile = open('../../data-strike-IGC.csv', 'r')
 csvHartalReader = csv.reader(csvHartalFile, delimiter=',')
 
-keywords = ['Sheikh Hasina', 'Hasina', 'Khaleda Zia', 'Khaleda', 'Zia', 'Ershad', 'Fakhrul', 'Tarique Rahman', 'Muhith', 'Nizami', 'Bangabandhu', 'Ziaur Rahman', 'Mirza Fakhrul Islam Alamgir', 'Obaidul Quader', 'Quader Molla', 'Ghulam Azam', 'Asaduzzaman Khan Kamal','BNP', 'Awami League', 'Jamaat', 'EC', 'Election Commission', 'Chhatra League', 'Jatiya Party', 'ACC', 'Shibir', 'BCL', 'Foreign Ministry', 'Jubo League', 'Chhatra Dal']
+keywords = ['Sheikh Hasina', 'Hasina', 'Khaleda Zia', 'Khaleda', 'Zia', 'Ershad', 'Fakhrul', 'Tarique Rahman','Fakhruddin Ahmed', 'Muhith', 'Nizami', 'Bangabandhu', 'Ziaur Rahman', 'Mirza Fakhrul Islam Alamgir', 'Obaidul Quader', 'Quader Molla', 'Ghulam Azam', 'Asaduzzaman Khan Kamal','BNP', 'Awami League', 'Jamaat','Jamaat-e-Islami', 'EC', 'Election Commission', 'Chhatra League', 'Jatiya Party', 'ACC', 'Shibir', 'BCL', 'Foreign Ministry', 'Jubo League', 'Chhatra Dal','Bangladesh Chhatra League','Asian Development Bank','Jahangirnagar University','Parliament','Shahbagh','Bhola','Padma Bridge','Supreme Court Bar Association','University of Dhaka','Bangabhaban']
 
 #Check if the two entites might share a common substring
 def findCommonSubstring(sub, obj):
@@ -60,6 +60,10 @@ subject_objects_with_timestamps = []
 edgeOccurencesEachDay = []
 days = []
 previousDay = ''
+
+hartalDates = []
+hartalIndicator = []
+
 #Ignore the first row
 next(csvreader)
 
@@ -127,22 +131,23 @@ numberOfTupleOccurences = sorted(counter.iteritems())
 
 """for i in numberOfTupleOccurences:
 	print (i)"""
+#print(subject_objects[:1000])
 
 count = [0]
 currentCount = 0
 #Output
 
 #YAxis
-for x in range(1,16):
+"""for x in range(1,16):
 	for i in numberOfTupleOccurences:
 		if i[1] == x:
 			currentCount += 1
 	count.append(currentCount)
 	currentCount = 0
-
+"""
 
 #XAxis
-xAxis = range(0,16)
+"""xAxis = range(0,16)"""
 
 
 #Plotting magic begins here
@@ -153,9 +158,30 @@ plt.yticks(range(0, max(count)+100, 1000))"""
 
 #dailystarspecific
 plt.bar(days, height= edgeOccurencesEachDay, width=1)
+#plt.plot(days,edgeOccurencesEachDay)
 plt.xlabel('Number of edge occurences')
 plt.ylabel('Unique edges')
-plt.yticks(range(0, max(edgeOccurencesEachDay)+100, 1000))
+#plt.yticks(range(0, max(edgeOccurencesEachDay)+100, 1000))
+#plt.gcf().autofmt_xdate()
+
+
+next(csvHartalReader)
+for row in csvHartalReader:
+	
+	year = row[0]
+	month = row[1]
+	day = row[2]
+
+	if int(year) < 2007:
+		continue
+	hartalDates.append(datetime.datetime(int(year),int(month),int(day),0,0))
+	hartalIndicator.append(60)
+
+plt.bar(hartalDates, height= hartalIndicator, width=1)
+
+
+
+
 
 plt.show()
 #print (numberOfTupleOccurences)
