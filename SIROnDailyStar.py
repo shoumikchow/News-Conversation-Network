@@ -60,6 +60,7 @@ def infectNodes(node, neighbouringNodes):
 def addToDict(infectedNodes, nodesToBeDeleted, timeToBeDeleted):
 	nodesToBeDeleted[timeToBeDeleted] = []
 	for i in infectedNodes:
+		#Update the nodesToBeDeleted dictionary to set the expiry time for the infected nodes 
 		nodesToBeDeleted[timeToBeDeleted].append(i)
 
 def recoverNodes(infectedNodes, nodesToBeDeleted, timestep):
@@ -67,7 +68,9 @@ def recoverNodes(infectedNodes, nodesToBeDeleted, timestep):
 		for i in nodesToBeDeleted[timestep]:
 			if i not in infectedNodes:
 				continue
+			#remove the infected nodes
 			infectedNodes.remove(i)
+			#Add to recovered nodes so that these nodes are not infected again
 			recoveredNodes.append(i)
 	return infectedNodes
 
@@ -122,7 +125,7 @@ numberOfTupleOccurences = sorted(counter.iteritems())
 print( "Seed node of simulation?")
 seedNode = raw_input()
 
-
+#Try out different expiry times for each node
 for expiryTime in range(7,10):
 
 	#plotterLists
@@ -137,6 +140,7 @@ for expiryTime in range(7,10):
 
 	infectedNodes = [seedNode]
 
+	#Get the directly connected nodes of seed node
 	neighbouringNodes = findNeighbouringNodes(subject_objects,seedNode,recoveredNodes)
 
 	currentNode = seedNode
@@ -145,19 +149,22 @@ for expiryTime in range(7,10):
 	#The timer
 	for timestep in range (1,1000):
 
+		#If there are no infected nodes left, break the loop
 		if not infectedNodes:
 			break
 
+		#If for current node, there are no neighbouring nodes, select the next node from the infected nodes and find whether it has directly connected nodes or not
 		if not neighbouringNodes:
 			for i in range (1,len(infectedNodes)):
 				arr = findNeighbouringNodes(subject_objects,currentNode,recoveredNodes)
+				#If the new node has directly connected nodes, choose it as the current node
 				if arr:
 					currentNode = infectedNodes[i]
 					break
 		else:
 			currentNode = infectedNodes[0]
 
-
+		#If the current node is a new node
 		if currentNode != previousNode:
 			#Find the network of the current node
 			neighbouringNodes = findNeighbouringNodes(subject_objects,currentNode,recoveredNodes)
@@ -166,13 +173,20 @@ for expiryTime in range(7,10):
 		#Update the infected nodes list by infecting the neighbouring nodes of the current node
 		infectedNodes += infectNodes(currentNode,neighbouringNodes)
 
+		#Update the neighbouringNodes so that only those nodes which are not infected are in the neighbouring nodes network
 		neighbouringNodes = [x for x in neighbouringNodes if x not in infectedNodes]
 
 		addToDict(infectedNodes, nodesToBeDeleted, timestep+expiryTime)
 
+		#The remaining nodes after the nodes which have reached their expiry have been deleted
 		infectedNodes = recoverNodes(infectedNodes, nodesToBeDeleted, timestep)
+
+		#Y axis will have the total number of infected nodes at the current timestep 
 		yAxis.append(len(infectedNodes))
+
+		#X axis will have the time
 		xAxis.append(timestep)
+
 		print (timestep)
 		print (infectedNodes)
 		print (neighbouringNodes)
