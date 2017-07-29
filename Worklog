@@ -27,3 +27,7 @@ Zawad
 24/7/17
 Zawad
 Ran SIR on Daily Star
+
+24-29
+Zawad
+Visualized the network using networkX in network.py, wrote DegreeDistribution.py to find out the probability degree distribution for each node, FindAmbassador.py to find out mentions of ambassadors in both DS and DT, optimized SIR code in OptimizedSIROnDS.py.
