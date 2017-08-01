@@ -6,8 +6,8 @@ import datetime
 from dateutil import parser
 #csvfile = open('../person_count.csv', 'r')
 
-expiryDate = 5
-csvfile = open('DailyStar.csv', 'r')
+expiryDate = 10
+csvfile = open('./Scraped data/DailyStar.csv', 'r')
 csvreader = csv.reader(csvfile, delimiter=',')
 
 """keywords = []
@@ -20,7 +20,7 @@ print(keywords)"""
 csvreader = csv.reader(csvfile, delimiter=',')"""
 
 #Hartal data csv
-csvHartalFile = open('data-strike-IGC.csv', 'r')
+csvHartalFile = open('./Scraped data/data-strike-IGC.csv', 'r')
 csvHartalReader = csv.reader(csvHartalFile, delimiter=',')
 
 keywords = ['Sheikh Hasina', 'Hasina', 'Khaleda Zia', 'Khaleda', 'Zia', 'Ershad', 'Fakhrul', 'Tarique Rahman','Fakhruddin Ahmed', 'Muhith', 'Nizami', 'Bangabandhu', 'Ziaur Rahman', 'Mirza Fakhrul Islam Alamgir', 'Obaidul Quader', 'Quader Molla', 'Ghulam Azam', 'Asaduzzaman Khan Kamal','BNP', 'Awami League', 'Jamaat','Jamaat-e-Islami', 'EC', 'Election Commission', 'Chhatra League', 'Jatiya Party', 'ACC', 'Shibir', 'BCL', 'Foreign Ministry', 'Jubo League', 'Chhatra Dal','Bangladesh Chhatra League','Asian Development Bank','Jahangirnagar University','Parliament','Shahbagh','Bhola','Padma Bridge','Supreme Court Bar Association','University of Dhaka','Bangabhaban']
@@ -71,7 +71,7 @@ hartalIndicator = []
 #Ignore the first row
 next(csvreader)
 
-count = 1
+# count = 1
 
 #Find out edge occurences
 for row in csvreader:
@@ -124,7 +124,7 @@ for row in csvreader:
 		"""print ('edge occurences here')
 		print (collections.OrderedDict(sorted(edgeOccurencesEachDay.items())))"""
 
-		count += 1
+		# count += 1
 
 	
 edgeOccurencesEachDay = (collections.OrderedDict(sorted(edgeOccurencesEachDay.items())))
@@ -171,18 +171,18 @@ currentCount = 0
 """xAxis = range(0,16)"""
 
 edgeOccurencesEachDay = (list(edgeOccurencesEachDay.values()))
-fig, ax = plt.subplots()
-ax.set_color_cycle(['red', 'black', 'yellow'])
+# fig, ax = plt.subplots()
+# ax.set_color_cycle(['red', 'black', 'yellow'])
 #Plotting magic begins here
 """plt.bar(xAxis, height= count)
 plt.xlabel('Number of edge occurences')
 plt.ylabel('Unique edges')
 plt.yticks(range(0, max(count)+100, 1000))"""
-print ('plotting')
-print (len(edgeOccurencesEachDay))
-print (len(days))
+# print ('plotting')
+# print (len(edgeOccurencesEachDay))
+# print (len(days))
 #dailystarspecific
-plt.bar(days, height= edgeOccurencesEachDay, width=1)
+plt.bar(days, height= edgeOccurencesEachDay, width=1, color='blue')
 #plt.plot(days,edgeOccurencesEachDay)
 plt.xlabel('Number of edge occurences')
 plt.ylabel('Unique edges')
@@ -202,7 +202,7 @@ for row in csvHartalReader:
 	hartalDates.append(datetime.datetime(int(year),int(month),int(day),0,0))
 	hartalIndicator.append(60)
 
-plt.bar(hartalDates, height= hartalIndicator, width=1)
+plt.bar(hartalDates, height= hartalIndicator, width=1, color='orange')
 
 
 
