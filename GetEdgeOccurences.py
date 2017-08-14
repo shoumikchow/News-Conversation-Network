@@ -2,6 +2,7 @@ import csv
 from collections import Counter
 import matplotlib.pyplot as plt
 import datetime
+from pprint import pprint
 
 csvfile = open('DailyStar.csv', 'r')
 csvreader = csv.reader(csvfile, delimiter=',')
@@ -158,8 +159,10 @@ print (len(edgeOccurencesEachDay))
 print (len(days))
 
 counterTimestamp = Counter(subject_objects_with_timestamps)
-numberOfTupleOccurencesWithTimestamp = sorted(counterTimestamp.iteritems())
+numberOfTupleOccurencesWithTimestamp = sorted(counterTimestamp.iteritems(), key=lambda x: x[0][2])
 
+"""for i in numberOfTupleOccurencesWithTimestamp:
+    print(i)"""
 """for i in numberOfTupleOccurencesWithTimestamp:
     if '2008-11' in i[0][2]:
         print i"""
@@ -195,8 +198,31 @@ for x in range(len(edgeOccurencesEachDay)):
                 startDate = days[x+1]
 
 print(len(eventsArray))
+
+edgeOccurencesInTimeRange = {}
 for i in range(len(eventsTimeArray)):
-    print(eventsTimeArray[i]+" "+eventsArray[i])
+    """startDate = (datetime.datetime.strptime(eventsTimeArray[i].split()[0], "%Y-%m-%d")).date()
+    endDate = (datetime.datetime.strptime(eventsTimeArray[i].split()[1], "%Y-%m-%d")).date()"""
+    startDate = eventsTimeArray[i].split()[0]
+    endDate = eventsTimeArray[i].split()[1]
+    timerange = False
+    keywordsInTimeRange = []
+    for x in numberOfTupleOccurencesWithTimestamp:
+        if startDate in x[0][2]:
+            timerange = True
+
+        if timerange == True:
+            keywordsInTimeRange.append(x[0][0])
+            keywordsInTimeRange.append(x[0][1])
+
+        if endDate in x[0][2]:
+            break
+    print(startDate)
+    print(sorted(Counter(keywordsInTimeRange).iteritems()))
+    print(endDate)
+    
+
+
 
 
 #dailystarspecific
