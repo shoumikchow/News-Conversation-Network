@@ -91,6 +91,8 @@ for row in csvreader:
         #Get political edge and add it to the list
         subject_objects.append(tuple((sub,obj)))
         count += 1
+
+csvfile.close()
 #Find the number of occurences of each tuple
 counter = Counter(subject_objects)
 #Convert the counter into a usable array
@@ -104,5 +106,6 @@ for i in numberOfTupleOccurences:
 getCommunities(G)
 #getPagerankNodes(G)
 #getBetweenessCentrality(G)
+
 
 
