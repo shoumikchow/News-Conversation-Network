@@ -107,34 +107,32 @@ def entities_in_text(just_text, loc, org, pers):
 
 # entity[0] is location, entity[1] is org, entity[2] is pers
 
-with open("./Scraped data/final v2.1.csv", "r") as file:
+with open("./Scraped data/DailyStar2.csv", "r") as file:
     conversational_words = ['said', 'told', 'asked', 'speak', 'say', 'tell', 'spoke', 'added', 'declare']
-    counter = 0
+    counter = 0   
     reader = csv.reader(file)
 
-    with open("./Scraped data/quotations_and_speeches_v1.1.csv", "a") as out:
-        writer = csv.writer(out)
-        writer.writerow(["original_id", "timestamp", "text", "locations", "organization", "person", "original_tags", "naive_tags", "keywords"])
+    with open("./Scraped data/DS_quotes.csv", "a") as out:
+        writer = csv.writer(out)  
+        writer.writerow(["original_id", "timestamp", "text", "locations", "organization", "person", "generated_keywords", "ml_tags"])
 
     for row in reader:
         counter += 1
         try:
             oid = row[0]
-            time = row[24]
-            locations = row[12]
-            organizations = row[16]
-            persons = row[20]
+            time = row[7]
+            locations = row[20]
+            organizations = row[22]
+            persons = row[24]
             news_text = ""
-            if row[26]:
+            if row[5]:
 
-                news_text = fix_quotes(row[26])
-                o_tags = row[23]
-                naive_tags = row[8]
-                keywords = row[5]
+                news_text = fix_quotes(row[5])
+                generated_keywords = row[8]
+                ml_tags = row[13]
 
-                o_tags = ast.literal_eval(o_tags)
-                naive_tags = ast.literal_eval(naive_tags)
-                keywords = ast.literal_eval(keywords)
+                generated_keywords = ast.literal_eval(generated_keywords)
+                ml_tags = ast.literal_eval(ml_tags)
 
                 quotes = find_quotes(news_text)
 
@@ -149,9 +147,9 @@ with open("./Scraped data/final v2.1.csv", "r") as file:
         # entity[0] is location, entity[1] is org, entity[2] is pers
 
                     if entities and len(entities[0] + entities[1] + entities[2]) >= 2:
-                        with open("./Scraped data/quotations_and_speeches_v1.1.csv", "a") as out:
+                        with open("./Scraped data/DS_quotes.csv", "a") as out:
                             writer = csv.writer(out)
-                            writer.writerow([oid, time, text, entities[0], entities[1], entities[2], o_tags, naive_tags, keywords])
+                            writer.writerow([oid, time, text, entities[0], entities[1], entities[2], generated_keywords, ml_tags])
 
                 period_delimited_list = tokenizer.tokenize(news_text)
 
@@ -161,9 +159,9 @@ with open("./Scraped data/final v2.1.csv", "r") as file:
                             sentence, entities = entities_in_text(
                                 sentence, locations, organizations, persons)
                             if not any(sentence in s for s in quotes) and entities and len(entities[0] + entities[1] + entities[2]) >= 2:
-                                with open("./Scraped data/quotations_and_speeches_v1.1.csv", "a") as out:
+                                with open("./Scraped data/DS_quotes.csv", "a") as out:
                                     writer = csv.writer(out)
-                                    writer.writerow([oid, time, sentence, entities[0], entities[1], entities[2], o_tags, naive_tags, keywords])
+                                    writer.writerow([oid, time, text, entities[0], entities[1], entities[2], generated_keywords, ml_tags])
 
         except:
             # print(counter, row[26])

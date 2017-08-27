@@ -26,6 +26,7 @@ with open('./Scraped data/DailyStar2.csv', 'a') as outfile:
 
 
 with open('./Scraped data/news_db.json', 'r+') as infile:
+    counter = 0
     for row in infile:
         # pprint(flattenjson(json.loads(row), "__"))
         fj = flattenjson(json.loads(row), "__")
@@ -72,3 +73,7 @@ with open('./Scraped data/news_db.json', 'r+') as infile:
                 ml_tags, ner_location, ner_money, ner_organization, ner_percent, ner_person, ner_time, ner_unique_location,
                 ner_unique_money, ner_unique_organization, ner_unique_percent, ner_unique_person, ner_unique_time,
                 news_url, newspaper, reporter, section, sentiment, shoulder, title, top_tagline])
+
+        counter += 1
+        if counter == 150400:
+            break
