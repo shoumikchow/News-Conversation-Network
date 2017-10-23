@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import datetime
 from pprint import pprint
 
-csvfile = open('DailyStar.csv', 'r')
+csvfile = open('./Scraped data/DailyStar.csv', 'r')
 csvreader = csv.reader(csvfile, delimiter=',')
 
 """keywords = []
@@ -17,10 +17,11 @@ print(keywords)"""
 csvreader = csv.reader(csvfile, delimiter=',')"""
 
 #Hartal data csv
-csvHartalFile = open('../../data-strike-IGC.csv', 'r')
+csvHartalFile = open('./Scraped data/data-strike-IGC.csv', 'r')
 csvHartalReader = csv.reader(csvHartalFile, delimiter=',')
 
 keywords = ['Sheikh Hasina', 'Hasina', 'Khaleda Zia', 'Khaleda', 'Zia', 'Ershad', 'Fakhrul', 'Tarique Rahman','Fakhruddin Ahmed', 'Muhith', 'Nizami', 'Bangabandhu', 'Ziaur Rahman', 'Mirza Fakhrul Islam Alamgir', 'Obaidul Quader', 'Quader Molla', 'Ghulam Azam', 'Asaduzzaman Khan Kamal','BNP', 'Awami League', 'Jamaat','Jamaat-e-Islami', 'EC', 'Election Commission', 'Chhatra League', 'Jatiya Party', 'ACC', 'Shibir', 'BCL', 'Foreign Ministry', 'Jubo League', 'Chhatra Dal','Bangladesh Chhatra League','Asian Development Bank','Jahangirnagar University','Parliament','Shahbagh','Bhola','Padma Bridge','Supreme Court Bar Association','University of Dhaka','Bangabhaban','Caretaker','Sahara Khatun','Shah AMS Kibria','President Ahmed','Jamaat-ul-Mujahideen','Jagrata Muslim Janata Bangladesh','Hizb-ut Tahrir','Motiur Rahman Nizami','Abul Kalam Azad','Ghulam Azam','Abdul Kader Mullah','Mir Quasem Ali','Abdus Subhan','Ansarullah Bangla Team','Shia Muslims','Ali Ahsan Mohammad Mujahid','Salahuddin Quader Chowdhury','atheists','Ahmed Rajib Haider','Rohingya','refugee']
+
 
 #Check if the two entites might share a common substring
 def findCommonSubstring(sub, obj):
@@ -126,7 +127,7 @@ for row in csvHartalReader:
 counter = Counter(subject_objects)
 
 #Convert the counter into a usable array
-numberOfTupleOccurences = sorted(counter.iteritems())
+numberOfTupleOccurences = sorted(counter.items())
 
 # for i in numberOfTupleOccurences:
 #     print (i)
@@ -155,11 +156,11 @@ plt.xlabel('Number of edge occurences')
 plt.ylabel('Unique edges')
 plt.yticks(range(0, max(count)+100, 1000))"""
 
-print (len(edgeOccurencesEachDay))
-print (len(days))
+# print (len(edgeOccurencesEachDay))
+# print (len(days))
 
 counterTimestamp = Counter(subject_objects_with_timestamps)
-numberOfTupleOccurencesWithTimestamp = sorted(counterTimestamp.iteritems(), key=lambda x: x[0][2])
+numberOfTupleOccurencesWithTimestamp = sorted(counterTimestamp.items(), key=lambda x: x[0][2])
 
 """for i in numberOfTupleOccurencesWithTimestamp:
     print(i)"""
@@ -197,7 +198,7 @@ for x in range(len(edgeOccurencesEachDay)):
                 startEdgeLength = 0
                 startDate = days[x+1]
 
-print(len(eventsArray))
+# print(len(eventsArray))
 
 edgeOccurencesInTimeRange = {}
 for i in range(len(eventsTimeArray)):
@@ -217,9 +218,9 @@ for i in range(len(eventsTimeArray)):
 
         if endDate in x[0][2]:
             break
-    print(startDate)
-    print(sorted(Counter(keywordsInTimeRange).iteritems()))
-    print(endDate)
+    # print(startDate)
+    # print(sorted(Counter(keywordsInTimeRange).items()))
+    # print(endDate)
     
 
 
@@ -234,20 +235,20 @@ plt.ylabel('Total number of edges per day')
 #plt.gcf().autofmt_xdate()
 
 #print (edgeOccurencesEachDay)
-next(csvHartalReader)
-for row in csvHartalReader:
+# next(csvHartalReader)
+# for row in csvHartalReader:
     
-    year = row[0]
-    month = row[1]
-    day = row[2]
+#     year = row[0]
+#     month = row[1]
+#     day = row[2]
 
-    if int(year) < 2007:
-        continue
+#     if int(year) < 2007:
+#         continue
 
-    hartalDates.append(datetime.datetime(int(year),int(month),int(day),0,0))
-    hartalIndicator.append(60)
+#     hartalDates.append(datetime.datetime(int(year),int(month),int(day),0,0))
+#     hartalIndicator.append(20)
 
-plt.bar(hartalDates, height= hartalIndicator, width=1)
+# plt.bar(hartalDates, height= hartalIndicator, width=1)
 
 plt.show()
 #print (numberOfTupleOccurences)

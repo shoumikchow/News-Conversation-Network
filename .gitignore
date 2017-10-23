@@ -1,3 +1,5 @@
 Scraped\ data/*
 Books/*
 DT*
+__pycache__/*
+*.pyc
