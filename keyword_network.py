@@ -45,15 +45,17 @@ with open("./Scraped data/news_db.json") as infile:
 
 
 pprint(all_combos_dict)
-# G = nx.Graph()
+G = nx.Graph()
 
-# for key, value in all_combos_dict.items():
-#     G.add_edge(key[0], key[1], weight=value)
+for key, value in all_combos_dict.items():
+    G.add_edge(key[0], key[1], weight=value)
 
-# edges = G.edges()
-# weights = [G[u][v]['weight'] for u, v in edges]
-# # min_max_scalar = preprocessing.MinMaxScaler()
-# labels = G.nodes()
+edges = G.edges()
+weights = [G[u][v]['weight'] for u, v in edges]
+# weights = [i / 1540 for i in weights]
+pprint(weights)
+# min_max_scalar = preprocessing.MinMaxScaler()
+labels = G.nodes()
 
-# nx.draw(G, pos=None, hold=None, edges=edges, width=weights, with_labels=True)
-# plt.show()
+nx.draw(G, pos=None, hold=None, edges=edges, width=weights, with_labels=True)
+plt.show()
