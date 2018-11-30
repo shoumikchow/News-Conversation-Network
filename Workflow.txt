@@ -1,0 +1,9 @@
+1. Use convert_json_to_csv.py to convert json of DT to csv - NO NEED
+2. Use remove_weird_symbols to make new csv without weird commas, semi-colons, etc. - WROTE FUNCTION
+3. Use fix_blank_lines.py to fix the CSV - MOST LIKELY NOT NEEDED
+
+4. Use separate_sentences.py to get quotations_and_speeches from original csv file of newspapers
+5. indirect_network.py converts all quotations and speeches (quotations_and_speeches_v2.0) into a new file (network_indirect.csv) where there are only indirect networks
+
+6. Run name_disambiguation (on network_indirect_v2.0.csv) to get rid of repeat rows by same speakers (network_indirect_v2.2.csv) - WROTE FUNCTION
+7. 

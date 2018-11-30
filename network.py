@@ -32,7 +32,7 @@ def findCommonSubstring(sub, obj):
 	else:
 		return False
 
-csvfile = open('DailyStar.csv', 'r')
+csvfile = open('./Scraped data/DailyStar.csv', 'r')
 csvreader = csv.reader(csvfile, delimiter=',')
 
 subject_objects = []
